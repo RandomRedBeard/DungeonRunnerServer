@@ -51,7 +51,7 @@ char* LOG_FILE = (char*) "log.txt";
 unsigned int ID_LEN = 2;
 unsigned int ID_MAX_LIM = INT_MAX;
 double AC_SKEW = .005;
-#if !defined (_WIN32) || (_WIN64)
+#if !defined (_WIN32) && !defined (_WIN64)
 unsigned int STD_LEN = 128;
 #endif
 unsigned int HEIGHT = 25;
