@@ -8,10 +8,7 @@
 #ifndef PHYSMAP_H_
 #define PHYSMAP_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 #include "room.h"
 #include "../probability.h"

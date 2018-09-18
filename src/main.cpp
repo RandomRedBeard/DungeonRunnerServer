@@ -5,13 +5,11 @@
  *      Author: thomasjansen
  */
 
-#define _CRT_RAND_S
+//Unsure about def
 
-#include <stdio.h>
-#include <stdlib.h>
+//#define _CRT_RAND_S
+
 #include <limits.h>
-#include <string.h>
-#include <time.h>
 
 #include <thread>
 
@@ -53,7 +51,7 @@ char* LOG_FILE = (char*) "log.txt";
 unsigned int ID_LEN = 2;
 unsigned int ID_MAX_LIM = INT_MAX;
 double AC_SKEW = .005;
-//unsigned int STD_LEN = 128;
+unsigned int STD_LEN = 128;
 unsigned int HEIGHT = 25;
 unsigned int WIDTH = 80;
 unsigned int MAX_POINT_STR_LEN;

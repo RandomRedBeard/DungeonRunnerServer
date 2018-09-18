@@ -8,9 +8,6 @@
 #ifndef PROTOCOLS_H_
 #define PROTOCOLS_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "../globals.h"
 #include "point.h"
 #include "objid.h"

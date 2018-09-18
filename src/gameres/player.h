@@ -8,8 +8,6 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <vector>

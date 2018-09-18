@@ -8,9 +8,6 @@
 #ifndef GAME_H_
 #define GAME_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <vector>
 
 #include "gameres/player.h"

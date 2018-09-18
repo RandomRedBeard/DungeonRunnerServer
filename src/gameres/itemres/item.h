@@ -8,10 +8,6 @@
 #ifndef ITEM_H_
 #define ITEM_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include "../point.h"
 #include "../objid.h"
 

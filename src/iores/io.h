@@ -13,7 +13,6 @@
 #include <Windows.h>
 #else
 #include <sys/socket.h>
-#include <unistd.h>
 #endif
 #include <errno.h>
 

@@ -9,10 +9,6 @@
 
 std::mutex logLock;
 
-int initLog() {
-	return 0;
-}
-
 int loginfo(std::string format, ...) {
 	logLock.lock();
 	va_list ap;

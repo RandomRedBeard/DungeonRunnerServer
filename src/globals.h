@@ -34,7 +34,7 @@ extern double AC_SKEW;
 #define DAMAGE_SEP ';'
 
 //STD GLOBALS
-const unsigned int STD_LEN = 128;
+extern unsigned int STD_LEN;// = 128;
 
 //STATE GLOBALS
 #define STATE_NORM 0

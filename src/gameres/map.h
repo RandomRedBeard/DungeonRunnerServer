@@ -8,15 +8,9 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <vector>
 #include <thread>
 #include <mutex>
-#include <ctime>
-#include <cstdio>
-#include <chrono>
 
 #include "../globals.h"
 #include "../log.h"

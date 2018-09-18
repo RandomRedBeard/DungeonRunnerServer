@@ -8,10 +8,6 @@
 #ifndef MONSTER_H_
 #define MONSTER_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
 #include <thread>
 #include <mutex>
 #include <condition_variable>
