@@ -610,7 +610,7 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 					strerror(n));
 			abort();
 		}
-		return -1;
+		return 0;
 	}
 
 	monster* m = monsterList[i];
