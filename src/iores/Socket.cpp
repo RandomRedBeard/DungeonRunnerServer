@@ -38,7 +38,7 @@ int Socket::write(const char* buffer, int len) {
 }
 
 int Socket::closeSocket() {
-#ifdef _WIN32
+#if defined (_WIN32) || (_WIN64)
 	return closesocket(fd);
 #else
 	return close(fd);

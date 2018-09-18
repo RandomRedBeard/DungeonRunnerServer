@@ -8,12 +8,12 @@
 #ifndef SOCKET_H_
 #define SOCKET_H_
 
-#ifdef _WIN32
+#if defined (_WIN32) || (_WIN64)
 #include <WinSock2.h>
 #else
 #include <arpa/inet.h>
-#endif
 #include <unistd.h>
+#endif
 #include <string>
 
 #include "io.h"

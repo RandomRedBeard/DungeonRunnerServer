@@ -8,7 +8,7 @@
 #ifndef SERVERSOCKET_H_
 #define SERVERSOCKET_H_
 
-#ifdef _WIN32
+#if defined (_WIN32) || (_WIN64)
 #include <WinSock2.h>
 #endif
 

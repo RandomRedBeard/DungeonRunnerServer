@@ -51,7 +51,9 @@ char* LOG_FILE = (char*) "log.txt";
 unsigned int ID_LEN = 2;
 unsigned int ID_MAX_LIM = INT_MAX;
 double AC_SKEW = .005;
+#if !defined (_WIN32) || (_WIN64)
 unsigned int STD_LEN = 128;
+#endif
 unsigned int HEIGHT = 25;
 unsigned int WIDTH = 80;
 unsigned int MAX_POINT_STR_LEN;
@@ -115,7 +117,7 @@ int main(int argc, char** argv) {
 	}
 
 	MAX_POINT_STR_LEN = snprintf( NULL, 0, "%d%c%d", HEIGHT, POINT_SEP, WIDTH);
-#ifdef _WIN32
+#if defined (_WIN32) || (_WIN64)
 	WSADATA wsa;
 	WSAStartup(MAKEWORD(2, 2), &wsa);
 #endif
