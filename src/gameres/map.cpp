@@ -622,7 +622,7 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 					mapId->getIdstr(), strerror(n));
 			abort();
 		}
-		return -1;
+		return 0;
 	}
 
 	dmg = m->takeDamage(dmg);
