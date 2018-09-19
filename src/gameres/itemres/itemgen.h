@@ -22,12 +22,13 @@
 
 #include "bow.h"
 #include "woodbow.h"
+#include "longbow.h"
 
 #define NUMBER_OF_ITEMS 4
 #define NUMBER_OF_WEAPONS 3
 #define NUMBER_OF_ARMORS 3
 #define NUMBER_OF_ARROWS 1
-#define NUMBER_OF_BOWS 1
+#define NUMBER_OF_BOWS 2
 
 item* createItem(objid*, int);
 

@@ -62,6 +62,8 @@ bow* createBow(objid* id, int lvl) {
 	switch (rand() % NUMBER_OF_BOWS) {
 	case 0:
 		return new woodbow(id, lvl);
+	case 1:
+		return new longbow(id, lvl);
 	}
 
 	return (bow*) nullptr;
