@@ -27,7 +27,7 @@
 #include "gameres/map.h"
 #include "game.h"
 
-#ifdef _WIN32
+#if defined (_WIN32) || defined (_WIN64)
 #pragma comment(lib,"Ws2_32.lib")
 #endif
 
