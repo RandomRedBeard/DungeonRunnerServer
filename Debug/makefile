@@ -12,6 +12,8 @@ include src/gameres/itemres/subdir.mk
 include src/gameres/monsterres/subdir.mk
 include src/gameres/physmapres/subdir.mk
 
+all: drserver
+
 drserver: $(OBJS)
 	$(CC) $(OBJS) $(LFLAG) -o drserver
 clean:
