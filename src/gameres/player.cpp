@@ -92,7 +92,6 @@ int player::findItem(const char* id) {
 
 void player::calculateHealth() {
 	maxhp = 100 + (10 * (lvl + attrs->getVitality() - 2));
-	printf("%d\n", maxhp);
 }
 
 void player::writerThread() {
@@ -395,6 +394,10 @@ int player::killed() {
 }
 
 int player::allocateAttr(const char* at) {
+	if (nattrpts <= 0) {
+		return -1;
+	}
+
 	if (strcmp(at, STRENGTH) == 0) {
 		attrs->setStrength(attrs->getStrength() + 1);
 	} else if (strcmp(at, DEXTERITY) == 0) {
