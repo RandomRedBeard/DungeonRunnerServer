@@ -1,7 +1,7 @@
 #include "attr.h"
 
 attr::attr() {
-	strength = intelligence = dexterity = vitality = 1;
+	strength = intelligence = dexterity = vitality = 0;
 }
 
 void attr::setStrength(int s) {

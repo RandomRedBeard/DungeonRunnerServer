@@ -29,7 +29,8 @@ item::item(const char* name_t, objid* tid, int l) {
 }
 
 item::~item() {
-	delete(attrs);
+	if (attrs)
+		delete(attrs);
 
 	if (name)
 		free(name);

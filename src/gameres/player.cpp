@@ -13,6 +13,7 @@ player::player(Socket* f) :
 	lvl = 1;
 
 	attrs = new attr();
+	(*attrs) += 1;
 	nattrpts = 0;
 
 	calculateHealth();
@@ -51,7 +52,9 @@ player::~player() {
 		free(name);
 	}
 
-	delete(attrs);
+	if (attrs) {
+		delete(attrs);
+	}
 
 	item* it;
 	while (inventory.size() != 0) {
@@ -247,24 +250,30 @@ int player::equip(const char* id, const char* part) {
 
 	if (w && strcmp(part, MAINHAND_OP) == 0) {
 		if (mainhand) {
+			(*attrs) -= mainhand->getAttrs();
 			mainhand->unequip();
 		}
 		mainhand = w;
 		mainhand->equip();
+		(*attrs) += mainhand->getAttrs();
 	}
 	else if (w && strcmp(part, OFFHAND_OP) == 0) {
 		if (offhand) {
+			(*attrs) -= offhand->getAttrs();
 			offhand->unequip();
 		}
 		offhand = w;
 		offhand->equip();
+		(*attrs) += offhand->getAttrs();
 	}
 	else if (a && strcmp(part, BODY_OP) == 0) {
 		if (body) {
+			(*attrs) -= body->getAttrs();
 			body->unequip();
 		}
 		body = a;
 		body->equip();
+		(*attrs) += body->getAttrs();
 	}
 	else {
 		return -1;
@@ -278,14 +287,17 @@ int player::equip(const char* id, const char* part) {
 int player::unequip(const char* part) {
 	if (mainhand && strcmp(part, MAINHAND_OP) == 0) {
 		mainhand->unequip();
+		(*attrs) -= mainhand->getAttrs();
 		mainhand = (weapon*) nullptr;
 	}
 	else if (offhand && strcmp(part, OFFHAND_OP) == 0) {
 		offhand->unequip();
+		(*attrs) -= offhand->getAttrs();
 		offhand = (weapon*) nullptr;
 	}
 	else if (body && strcmp(part, BODY_OP) == 0) {
 		body->unequip();
+		(*attrs) -= body->getAttrs();
 		body = (armor*) nullptr;
 	}
 	else {
