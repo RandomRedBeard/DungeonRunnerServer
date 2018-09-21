@@ -27,6 +27,8 @@
 #include "itemres/bow.h"
 #include "itemres/arrow.h"
 
+#include "attr.h"
+
 class player {
 	Socket* fd;
 
@@ -43,6 +45,8 @@ class player {
 	int curxp, nextxp;
 
 	int state;
+
+	attr* attrs;
 
 	std::vector<item*> inventory;
 	std::queue<arrow*> quiver;
@@ -73,6 +77,9 @@ public:
 	int getCurHp();
 	void setMaxHp(int);
 	int getMaxHp();
+
+	void setAttrs(attr*);
+	attr* getAttrs();
 
 	int pickUp(item*);
 	item* drop(const char*);

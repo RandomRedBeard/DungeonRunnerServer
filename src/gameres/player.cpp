@@ -18,6 +18,8 @@ player::player(Socket* f) :
 	curxp = 0;
 	nextxp = 100;
 
+	attrs = new attr();
+
 	state = STATE_OK;
 
 	mainhand = offhand = (weapon*) nullptr;
@@ -47,6 +49,8 @@ player::~player() {
 	if (name) {
 		free(name);
 	}
+
+	delete(attrs);
 
 	item* it;
 	while (inventory.size() != 0) {
@@ -120,8 +124,6 @@ void player::writerThread() {
 }
 
 int player::addMessage(const char* msg) {
-	int n;
-
 	ostreamLock.lock();
 
 	char* buffer = (char*)malloc(strlen(msg) + 1);
@@ -180,6 +182,14 @@ void player::setMaxHp(int mhp) {
 
 int player::getMaxHp() {
 	return maxhp;
+}
+
+void player::setAttrs(attr* a) {
+	(*attrs) = a;
+}
+
+attr* player::getAttrs() {
+	return attrs;
 }
 
 int player::pickUp(item* it) {
