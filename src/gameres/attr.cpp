@@ -46,3 +46,31 @@ void attr::operator=(attr* a) {
 	intelligence = a->getIntelligence();
 	vitality = a->getVitality();
 }
+
+void attr::operator+=(attr* a) {
+	strength += a->getStrength();
+	dexterity += a->getDexterity();
+	intelligence += a->getIntelligence();
+	vitality += a->getVitality();
+}
+
+void attr::operator-=(attr* a) {
+	strength -= a->getStrength();
+	dexterity -= a->getDexterity();
+	intelligence -= a->getIntelligence();
+	vitality -= a->getVitality();
+}
+
+void attr::operator+=(int i) {
+	strength += i;
+	dexterity += i;
+	intelligence += i;
+	vitality += i;
+}
+
+void attr::operator-=(int i) {
+	strength -= i;
+	dexterity -= i;
+	intelligence -= i;
+	vitality -= i;
+}

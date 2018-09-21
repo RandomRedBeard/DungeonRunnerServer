@@ -12,13 +12,14 @@ player::player(Socket* f) :
 	name = (char*) nullptr;
 	lvl = 1;
 
+	attrs = new attr();
+	nattrpts = 0;
+
 	calculateHealth();
 	curhp = maxhp;
 
 	curxp = 0;
 	nextxp = 100;
-
-	attrs = new attr();
 
 	state = STATE_OK;
 
@@ -90,7 +91,8 @@ int player::findItem(const char* id) {
 }
 
 void player::calculateHealth() {
-	maxhp = 100 + (10 * (lvl - 1));
+	maxhp = 100 + (10 * (lvl + attrs->getVitality() - 2));
+	printf("%d\n", maxhp);
 }
 
 void player::writerThread() {
@@ -297,7 +299,7 @@ int player::unequip(const char* part) {
 }
 
 int player::melee() {
-	int dmg = 0;
+	int dmg = attrs->getStrength();
 	if (mainhand) {
 		dmg += mainhand->melee();
 	}
@@ -361,6 +363,8 @@ void player::levelUp() {
 
 	nextxp += 100;
 
+	nattrpts += 3;
+
 	calculateHealth();
 
 	curhp = maxhp;
@@ -387,5 +391,22 @@ int player::killed() {
 
 	fd->shutdownSocket();
 
+	return 0;
+}
+
+int player::allocateAttr(const char* at) {
+	if (strcmp(at, STRENGTH) == 0) {
+		attrs->setStrength(attrs->getStrength() + 1);
+	} else if (strcmp(at, DEXTERITY) == 0) {
+		attrs->setDexterity(attrs->getDexterity() + 1);
+	} else if (strcmp(at, INTELLIGENCE) == 0) {
+		attrs->setIntelligence(attrs->getIntelligence() + 1);
+	} else if (strcmp(at, VITALITY) == 0) {
+		attrs->setVitality(attrs->getVitality() + 1);
+	} else {
+		return -1;
+	}
+
+	calculateHealth();
 	return 0;
 }

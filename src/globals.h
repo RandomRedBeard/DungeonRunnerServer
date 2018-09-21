@@ -73,6 +73,7 @@ extern unsigned int STD_LEN;// = 128;
 #define EQUIP_OP "Equip"
 #define UNEQUIP_OP "Unequip"
 #define LEVELUP_OP "LevelUp"
+#define ALLOCATE_ATTR_OP "Allocate"
 
 #define PLAYER_OP "Player"
 #define MONSTER_OP "Monster"
@@ -87,5 +88,11 @@ extern unsigned int STD_LEN;// = 128;
 //ARROW RELATED GLOBALS
 extern unsigned int MIN_NUMBER_ARROWS;
 extern unsigned int MAX_NUMBER_ARROWS;
+
+//ATTR OPTS
+#define STRENGTH "STR"
+#define DEXTERITY "DEX"
+#define INTELLIGENCE "INT"
+#define VITALITY "VIT"
 
 #endif /* GLOBALS_H_ */

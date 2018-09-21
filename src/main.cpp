@@ -76,6 +76,7 @@ int playerPickUp(player*, map*);
 int playerDrop(player*, map*);
 int playerEquip(player*, map*);
 int playerUnequip(player*, map*);
+int playerAllocateAttr(player*, map*);
 
 int globalMessage(player*);
 
@@ -299,6 +300,10 @@ void readerThread(Socket* fd) {
 			if (playerUnequip(p, m) < 0) {
 				break;
 			}
+		} else if (strcmp(buffer, ALLOCATE_ATTR_OP) == 0) {
+			if (playerAllocateAttr(p, m) < 0) {
+				break;
+			}
 		} else if (strcmp(buffer, TRAVEL_REQUEST_OP) == 0) {
 			if (m->removePlayer(p) < 0) {
 				break;
@@ -436,6 +441,16 @@ int playerUnequip(player* p, map* m) {
 	}
 
 	return m->playerUnequip(p, part);
+}
+
+int playerAllocateAttr(player* p, map* m) {
+	char at[STD_LEN];
+
+	if (p->read(at) < 0) {
+		return -1;
+	}
+
+	return m->playerAllocateAttr(p, at);
 }
 
 int globalMessage(player* p) {

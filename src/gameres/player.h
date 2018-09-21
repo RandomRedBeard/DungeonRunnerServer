@@ -47,6 +47,7 @@ class player {
 	int state;
 
 	attr* attrs;
+	int nattrpts;
 
 	std::vector<item*> inventory;
 	std::queue<arrow*> quiver;
@@ -97,6 +98,8 @@ public:
 	int getState();
 
 	int killed();
+
+	int allocateAttr(const char*);
 };
 
 #endif /* PLAYER_H_ */

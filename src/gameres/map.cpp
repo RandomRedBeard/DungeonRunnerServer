@@ -867,3 +867,36 @@ int map::playerUnequip(player* p, const char* eq_part) {
 	return 0;
 }
 
+int map::playerAllocateAttr(player* p, const char* at) {
+	int n = lock();
+	if (n != 0) {
+		logerr("%s allocate attr lock failure %s\n", p->getName(), strerror(n));
+		abort();
+	}
+
+	if (p->allocateAttr(at) < 0) {
+		n = unlock();
+		if (n != 0) {
+			logerr("%s allocate attr unlock failure %s\n", p->getName(), strerror(n));
+			abort();
+		}
+		return -1;
+	}
+
+	char buffer[STD_LEN];
+
+	allocate_attr_op(buffer, STD_LEN, p, at);
+	n = unprotectedBroadcast(buffer);
+
+	if (n < 0) {
+		logerr("unprotected broadcast failure %s\n", mapId->getIdstr());
+	}
+
+	n = unlock();
+	if (n != 0) {
+		logerr("%s allocate attr unlock failure %s\n", p->getName(), strerror(n));
+		abort();
+	}
+
+	return 0;
+}

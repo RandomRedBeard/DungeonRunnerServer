@@ -15,7 +15,12 @@ public:
 	void setVitality(int);
 	int getVitality();
 
-	void operator=( attr* );
+	void operator=(attr*);
+	void operator+=(attr*);
+	void operator-=(attr*);
+
+	void operator+=(int);
+	void operator-=(int);
 };
 
 #endif

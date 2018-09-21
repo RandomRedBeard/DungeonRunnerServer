@@ -60,4 +60,6 @@ int unequip_op(char*, int, player*, const char*);
 
 int levelup_op(char*, int, player*);
 
+int allocate_attr_op(char*, int, player*, const char*);
+
 #endif /* PROTOCOLS_H_ */

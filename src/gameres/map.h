@@ -79,6 +79,8 @@ public:
 	int playerDrop(player*, const char*);
 	int playerEquip(player*, const char*, const char*);
 	int playerUnequip(player*, const char*);
+
+	int playerAllocateAttr(player*, const char*);
 };
 
 #endif /* MAP_H_ */

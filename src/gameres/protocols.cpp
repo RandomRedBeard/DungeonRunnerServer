@@ -240,3 +240,6 @@ int levelup_op(char* buffer, int len, player* p) {
 			p->getName(), OP_SEP, p->getLvl(), OP_SEP);
 }
 
+int allocate_attr_op(char* buffer, int len, player* p, const char* at) {
+	return snprintf(buffer, len, "%s%c%s%c%s%c", ALLOCATE_ATTR_OP, OP_SEP, p->getName(), OP_SEP, at, OP_SEP);
+}
