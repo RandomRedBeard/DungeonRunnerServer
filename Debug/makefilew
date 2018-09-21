@@ -1,0 +1,19 @@
+TARGET = drserver
+CFLAG = /EHsc /c
+OBJS = 
+
+include src\subdirw.mk
+include src\topt\subdirw.mk
+include src\iores\subdirw.mk
+include src\gameres\subdirw.mk
+include src\gameres\itemres\subdirw.mk
+include src\gameres\monsterres\subdirw.mk
+include src\gameres\physmapres\subdirw.mk
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(CC) $(OBJS) /Fe: $(TARGET)
+
+clean:
+	del$(OBJS)
