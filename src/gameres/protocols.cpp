@@ -77,35 +77,51 @@ int enter_map_op(char* buffer, int len, item* it) {
 }
 
 int enter_map_op(char* buffer, int len, weapon* w) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 	ENTER_MAP_OP, OP_SEP, WEAPON_OP, OP_SEP, w->getId()->getIdstr(),
 			OP_SEP, w->getName(), OP_SEP, w->getPt().getX(), POINT_SEP,
 			w->getPt().getY(), OP_SEP, w->getLvl(), OP_SEP, w->getMaxDmg(),
-			DAMAGE_SEP, w->getMinDmg(), OP_SEP);
+			DAMAGE_SEP, w->getMinDmg(), OP_SEP,
+			w->getAttrs()->getStrength(), ATTR_SEP,
+			w->getAttrs()->getDexterity(), ATTR_SEP,
+			w->getAttrs()->getIntelligence(), ATTR_SEP,
+			w->getAttrs()->getVitality(), OP_SEP);
 }
 
 int enter_map_op(char* buffer, int len, armor* a) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 	ENTER_MAP_OP, OP_SEP, ARMOR_OP, OP_SEP, a->getId()->getIdstr(),
 	OP_SEP, a->getName(), OP_SEP, a->getPt().getX(), POINT_SEP,
-			a->getPt().getY(), OP_SEP, a->getLvl(), OP_SEP, a->getAc(), OP_SEP);
+			a->getPt().getY(), OP_SEP, a->getLvl(), OP_SEP, a->getAc(), OP_SEP,
+			a->getAttrs()->getStrength(), ATTR_SEP,
+                        a->getAttrs()->getDexterity(), ATTR_SEP,
+                        a->getAttrs()->getIntelligence(), ATTR_SEP,
+                        a->getAttrs()->getVitality(), OP_SEP);
 }
 
 int enter_map_op(char* buffer, int len, arrow* ar) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 	ENTER_MAP_OP, OP_SEP, ARROW_OP, OP_SEP, ar->getId()->getIdstr(),
 	OP_SEP, ar->getName(), OP_SEP, ar->getPt().getX(), POINT_SEP,
 			ar->getPt().getY(), OP_SEP, ar->getLvl(), OP_SEP, ar->getMaxDmg(),
-			DAMAGE_SEP, ar->getMinDmg(), OP_SEP, ar->getNumberArrows(), OP_SEP);
+			DAMAGE_SEP, ar->getMinDmg(), OP_SEP, ar->getNumberArrows(), OP_SEP,
+			ar->getAttrs()->getStrength(), ATTR_SEP,
+                        ar->getAttrs()->getDexterity(), ATTR_SEP,
+                        ar->getAttrs()->getIntelligence(), ATTR_SEP,
+                        ar->getAttrs()->getVitality(), OP_SEP);
 }
 
 int enter_map_op(char* buffer, int len, bow* b) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 			ENTER_MAP_OP, OP_SEP, BOW_OP, OP_SEP, b->getId()->getIdstr(),
 			OP_SEP, b->getName(), OP_SEP, b->getPt().getX(), POINT_SEP,
 			b->getPt().getY(), OP_SEP, b->getLvl(), OP_SEP, b->getMaxDmg(),
 			DAMAGE_SEP, b->getMinDmg(), OP_SEP, b->getRangeMaxDmg(), DAMAGE_SEP,
-			b->getRangeMinDmg(), OP_SEP);
+			b->getRangeMinDmg(), OP_SEP,
+			b->getAttrs()->getStrength(), ATTR_SEP,
+                        b->getAttrs()->getDexterity(), ATTR_SEP,
+                        b->getAttrs()->getIntelligence(), ATTR_SEP,
+                        b->getAttrs()->getVitality(), OP_SEP);
 }
 
 int exit_map_op(char* buffer, int len, player* p) {
@@ -188,39 +204,53 @@ int drop_op(char* buffer, int len, player* p, item* it) {
 
 int drop_op(char* buffer, int len, player* p, weapon* w) {
 	return snprintf(buffer, len,
-			"%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c",
+			"%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 	DROP_OP, OP_SEP, p->getName(), OP_SEP, WEAPON_OP, OP_SEP,
 			w->getId()->getIdstr(), OP_SEP, w->getName(), OP_SEP,
 			w->getPt().getX(), POINT_SEP, w->getPt().getY(), OP_SEP,
 			w->getLvl(), OP_SEP, w->getMaxDmg(), DAMAGE_SEP, w->getMinDmg(),
-			OP_SEP);
+			OP_SEP, w->getAttrs()->getStrength(), ATTR_SEP,
+                        w->getAttrs()->getDexterity(), ATTR_SEP,
+                        w->getAttrs()->getIntelligence(), ATTR_SEP,
+                        w->getAttrs()->getVitality(), OP_SEP);
 }
 
 int drop_op(char* buffer, int len, player* p, armor* a) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 	DROP_OP, OP_SEP, p->getName(), OP_SEP, ARMOR_OP, OP_SEP,
 			a->getId()->getIdstr(), OP_SEP, a->getName(), OP_SEP,
 			a->getPt().getX(), POINT_SEP, a->getPt().getY(), OP_SEP,
-			a->getLvl(), OP_SEP, a->getAc(), OP_SEP);
+			a->getLvl(), OP_SEP, a->getAc(), OP_SEP,
+			a->getAttrs()->getStrength(), ATTR_SEP,
+                        a->getAttrs()->getDexterity(), ATTR_SEP,
+                        a->getAttrs()->getIntelligence(), ATTR_SEP,
+                        a->getAttrs()->getVitality(), OP_SEP);
 }
 
 int drop_op(char* buffer, int len, player* p, arrow* ar) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 			DROP_OP, OP_SEP, p->getName(), OP_SEP, ARROW_OP, OP_SEP,
 			ar->getId()->getIdstr(), OP_SEP, ar->getName(), OP_SEP,
 			ar->getPt().getX(), POINT_SEP, ar->getPt().getY(), OP_SEP,
 			ar->getLvl(), OP_SEP, ar->getMaxDmg(), DAMAGE_SEP, ar->getMinDmg(),
-			OP_SEP, ar->getNumberArrows(), OP_SEP);
+			OP_SEP, ar->getNumberArrows(), OP_SEP, ar->getAttrs()->getStrength(), ATTR_SEP,
+                        ar->getAttrs()->getDexterity(), ATTR_SEP,
+                        ar->getAttrs()->getIntelligence(), ATTR_SEP,
+                        ar->getAttrs()->getVitality(), OP_SEP);
 }
 
 int drop_op(char* buffer, int len, player* p, bow* b) {
 	return snprintf(buffer, len,
-			"%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c", DROP_OP, OP_SEP,
+			"%s%c%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
+			 DROP_OP, OP_SEP,
 			p->getName(), OP_SEP, BOW_OP, OP_SEP, b->getId()->getIdstr(),
 			OP_SEP, b->getName(), OP_SEP, b->getPt().getX(), POINT_SEP,
 			b->getPt().getY(), OP_SEP, b->getLvl(), OP_SEP, b->getMaxDmg(),
 			DAMAGE_SEP, b->getMinDmg(), OP_SEP, b->getRangeMaxDmg(), DAMAGE_SEP,
-			b->getRangeMinDmg(), OP_SEP);
+			b->getRangeMinDmg(), OP_SEP, b->getAttrs()->getStrength(), ATTR_SEP,
+                        b->getAttrs()->getDexterity(), ATTR_SEP,
+                        b->getAttrs()->getIntelligence(), ATTR_SEP,
+                        b->getAttrs()->getVitality(), OP_SEP);
 }
 
 int equip_op(char* buffer, int len, player* p, const char* id,

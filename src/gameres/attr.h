@@ -1,5 +1,5 @@
 #ifndef ATTR_H_
-#define ATTT_H_
+#define ATTR_H_
 
 class attr {
 	int strength, intelligence, dexterity, vitality;

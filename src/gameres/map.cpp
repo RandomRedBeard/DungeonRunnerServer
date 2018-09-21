@@ -22,7 +22,7 @@ map::map(objid* m_id, objid* i_id, int l) :
 		it->setPt(placeItem());
 		itemList.push_back(it);
 	}
-	
+
 }
 
 map::~map() {

@@ -10,12 +10,15 @@
 
 #include "../point.h"
 #include "../objid.h"
+#include "../attr.h"
 
 class item {
 	char* name;
 	point pt;
 	objid* id;
 	int lvl;
+
+	attr* attrs;
 public:
 	item();
 	item(const char*, objid*, int);
@@ -29,6 +32,9 @@ public:
 	virtual objid* getId();
 	virtual void setLvl(int);
 	virtual int getLvl();
+
+	void setAttrs(attr*);
+	attr* getAttrs();
 };
 
 #endif /* ITEM_H_ */

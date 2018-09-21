@@ -12,6 +12,8 @@ item::item() {
 	id = (objid*) nullptr;
 
 	lvl = 1;
+
+	attrs = new attr();
 }
 
 item::item(const char* name_t, objid* tid, int l) {
@@ -22,9 +24,13 @@ item::item(const char* name_t, objid* tid, int l) {
 
 	setName(name_t);
 	setId(tid);
+
+	attrs = new attr();
 }
 
 item::~item() {
+	delete(attrs);
+
 	if (name)
 		free(name);
 	if (id)
@@ -65,4 +71,15 @@ void item::setLvl(int l) {
 
 int item::getLvl() {
 	return lvl;
+}
+
+void item::setAttrs(attr* a) {
+	(*attrs) = a;
+}
+
+attr* item::getAttrs() {
+	if (!attrs) {
+		printf("%s\n", name);
+	}
+	return attrs;
 }
