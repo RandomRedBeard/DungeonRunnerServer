@@ -225,14 +225,17 @@ item* player::drop(const char* id) {
 	inventory.erase(inventory.begin() + index);
 
 	if (it == mainhand) {
+		(*attrs) -= mainhand->getAttrs();
 		mainhand->unequip();
 		mainhand = (weapon*) nullptr;
 	}
 	else if (it == offhand) {
+		(*attrs) -= offhand->getAttrs();
 		offhand->unequip();
 		offhand = (weapon*) nullptr;
 	}
 	else if (it == body) {
+		(*attrs) -= body->getAttrs();
 		body->unequip();
 		body = (armor*) nullptr;
 	}
