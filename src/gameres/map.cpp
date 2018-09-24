@@ -204,6 +204,10 @@ int map::monsterKilled(player* p, monster* m) {
 
 	delete (m);
 
+	if (!prob(.3)) { //30% drop rate
+		return 0;
+	}
+
 	item* it = createItem(itemId->childId(), lvl);
 	it->setPt(pt);
 	itemList.push_back(it);
