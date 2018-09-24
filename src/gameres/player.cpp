@@ -383,7 +383,7 @@ bool player::isLevel() {
 void player::levelUp() {
 	lvl++;
 
-	nextxp += 100;
+	nextxp += 100 * lvl;
 
 	nattrpts += 3;
 

@@ -13,6 +13,7 @@
 #include "axe.h"
 
 #include "armor.h"
+#include "clotharmor.h"
 #include "leatherarmor.h"
 #include "ironarmor.h"
 #include "steelarmor.h"
@@ -26,7 +27,7 @@
 
 #define NUMBER_OF_ITEMS 4
 #define NUMBER_OF_WEAPONS 3
-#define NUMBER_OF_ARMORS 3
+#define NUMBER_OF_ARMORS 4
 #define NUMBER_OF_ARROWS 1
 #define NUMBER_OF_BOWS 2
 

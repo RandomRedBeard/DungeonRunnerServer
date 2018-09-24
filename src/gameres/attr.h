@@ -1,6 +1,8 @@
 #ifndef ATTR_H_
 #define ATTR_H_
 
+#include <stdlib.h>
+
 class attr {
 	int strength, intelligence, dexterity, vitality;
 public:
@@ -14,6 +16,8 @@ public:
 	int getDexterity();
 	void setVitality(int);
 	int getVitality();
+
+	void rand_stats(int, int);
 
 	void operator=(attr*);
 	void operator+=(attr*);

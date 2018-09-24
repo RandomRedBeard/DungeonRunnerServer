@@ -40,6 +40,29 @@ int attr::getVitality() {
 	return i;
 }
 
+void attr::rand_stats(int lvl, int n) {
+	int** buffer = (int**)malloc(sizeof(int*) * 4);
+	*(buffer) = &strength;
+	*(buffer + 1) = &dexterity;
+	*(buffer + 2) = &intelligence;
+	*(buffer + 3) = &vitality;
+
+	int n1, n2, lim = 50 + rand() % 50;
+	for (int i = 0; i < lim; i++) {
+		n1 = rand() % 4;
+		n2 = rand() % 4;
+		int* temp = *(buffer + n1);
+		*(buffer + n1) = *(buffer + n2);
+		*(buffer + n2) = temp;
+	}
+
+	for (int i = 0; i < n; i++) {
+		**(buffer + i) = (2 + rand() % 10) * lvl;
+	}
+
+	free(buffer);
+}
+
 void attr::operator=(attr* a) {
 	strength = a->getStrength();
 	dexterity = a->getDexterity();

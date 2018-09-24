@@ -13,7 +13,8 @@ src\gameres\itemres\shortsword.o \
 src\gameres\itemres\steelarmor.o \
 src\gameres\itemres\weapon.o \
 src\gameres\itemres\woodarrow.o \
-src\gameres\itemres\woodbow.o
+src\gameres\itemres\woodbow.o \
+src\gameres\itemres\clotharmor.o
 
 src\gameres\itemres\armor.o:
 	$(CC) $(CFLAG) ..\src\gameres\itemres\armor.cpp /Fo: src\gameres\itemres\armor.o
@@ -45,3 +46,5 @@ src\gameres\itemres\woodarrow.o:
 	$(CC) $(CFLAG) ..\src\gameres\itemres\woodarrow.cpp /Fo: src\gameres\itemres\woodarrow.o
 src\gameres\itemres\woodbow.o:
 	$(CC) $(CFLAG) ..\src\gameres\itemres\woodbow.cpp /Fo: src\gameres\itemres\woodbow.o
+src\gameres\itemres\clotharmor.o:
+	$(CC) $(CFLAG) ..\src\gameres\itemres\clotharmor.cpp /Fo: src\gameres\itemres\clotharmor.o

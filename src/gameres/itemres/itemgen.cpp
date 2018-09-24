@@ -42,6 +42,8 @@ armor* createArmor(objid* id, int lvl) {
 		return new ironarmor(id, lvl);
 	case 2:
 		return new steelarmor(id, lvl);
+	case 3:
+		return new clotharmor(id, lvl);
 	}
 
 	return (armor*) nullptr;
