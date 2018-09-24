@@ -321,7 +321,7 @@ int player::unequip(const char* part) {
 }
 
 int player::melee() {
-	int dmg = attrs->getStrength();
+	int dmg = 0;
 	if (mainhand) {
 		dmg += mainhand->melee();
 	}
