@@ -33,12 +33,11 @@ int physmap_op(char* buffer, int len, physmap* p) {
 }
 
 int enter_map_op(char* buffer, int len, player* p) {
-	return snprintf(buffer, len, "%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
+	return snprintf(buffer, len, "%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c",
 	ENTER_MAP_OP, OP_SEP, PLAYER_OP, OP_SEP, p->getName(), OP_SEP,
 			p->getPt().getX(), POINT_SEP, p->getPt().getY(), OP_SEP,
 			p->getLvl(), OP_SEP, p->getCurHp(), HEALTH_SEP, p->getMaxHp(),
-			OP_SEP, p->getNAttrPts(), OP_SEP,
-			p->getAttrs()->getStrength(), ATTR_SEP,
+			OP_SEP,	p->getAttrs()->getStrength(), ATTR_SEP,
 			p->getAttrs()->getDexterity(), ATTR_SEP,
 			p->getAttrs()->getIntelligence(), ATTR_SEP,
 			p->getAttrs()->getVitality(), OP_SEP);
