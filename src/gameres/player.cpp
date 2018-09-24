@@ -196,6 +196,14 @@ attr* player::getAttrs() {
 	return attrs;
 }
 
+void player::setNAttrPts(int pts) {
+	nattrpts = pts;
+}
+
+int player::getNAttrPts() {
+	return nattrpts;
+}
+
 int player::pickUp(item* it) {
 	arrow* ar = dynamic_cast<arrow*>(it);
 	if (ar) {

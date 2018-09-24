@@ -81,6 +81,8 @@ public:
 
 	void setAttrs(attr*);
 	attr* getAttrs();
+	void setNAttrPts(int);
+	int getNAttrPts();
 
 	int pickUp(item*);
 	item* drop(const char*);
