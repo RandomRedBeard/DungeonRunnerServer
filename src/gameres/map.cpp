@@ -140,11 +140,11 @@ int map::unlock() {
 }
 
 point map::placePlayer() {
-	unsigned int rad = 0;
+	int rad = 0;
 	point pt;
 	do {
-		for (unsigned int i = rad * -1; i < rad + 1; i++) {
-			for (unsigned int j = rad * -1; j < rad + 1; j++) {
+		for (int i = rad * -1; i < rad + 1; i++) {
+			for (int j = rad * -1; j < rad + 1; j++) {
 				pt.setX(i + playerSpawn.getX());
 				pt.setY(j + playerSpawn.getY());
 				if (findPlayer(pt) < 0 && findMonster(pt) < 0
@@ -554,9 +554,9 @@ int map::playerMove(player* p, point pt) {
 		return false;
 	}
 
-	/*if (pt.l1dist(p->getPt()) != 1) {
+	if (pt.l1dist(p->getPt()) != 1) {
 		return false;
-	 }*/
+	 }
 
 	int n = lock();
 	if (n != 0) {
