@@ -12,6 +12,8 @@
 #include <thread>
 #include <mutex>
 
+#include <math.h>
+
 #include "../globals.h"
 #include "../log.h"
 #include "point.h"
@@ -64,6 +66,8 @@ class map {
 
 	player* findClosestPlayer(point);
 	point getClosestPt(point, point);
+
+	bool check_range(point, point);
 public:
 	map(objid*, objid*, int);
 	virtual ~map();

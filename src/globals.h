@@ -25,6 +25,12 @@ extern unsigned int HEIGHT;
 extern unsigned int WIDTH;
 extern unsigned int SQRT_ROOM_N;
 
+#define VERT_WALL '|'
+#define HORZ_WALL '-'
+#define FLOOR '.'
+#define HALLWAY_ENTRANCE '+'
+#define HALLWAY_FLOOR '#'
+
 #define STATE_OK 0
 #define STATE_UNRECOVERABLE -1
 
@@ -73,6 +79,7 @@ extern unsigned int STD_LEN;// = 128;
 #define EQUIP_OP "Equip"
 #define UNEQUIP_OP "Unequip"
 #define LEVELUP_OP "LevelUp"
+#define MISS_OP "MISS"
 #define ALLOCATE_ATTR_OP "Allocate"
 
 #define PLAYER_OP "Player"

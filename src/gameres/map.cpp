@@ -410,6 +410,62 @@ point map::getClosestPt(point src, point dest) {
 	return pt;
 }
 
+bool map::check_range(point src, point dest) {
+	point target_vector(dest.getX() - src.getX(),
+		dest.getY() - src.getY());
+
+	double angle = atan((double)target_vector.getX() / (double)target_vector.getY());
+
+	double x, y;
+	double cursx, cursy;
+
+	y = cos(angle);
+	x = sin(angle);
+
+	if (target_vector.getX() < 0 && x > 0) {
+		x *= -1;
+	}
+	else if (target_vector.getX() > 0 && x < 0) {
+		x *= -1;
+	}
+
+	if (target_vector.getY() < 0 && y > 0) {
+		y *= -1;
+	}
+	else if (target_vector.getY() > 0 && y < 0) {
+		y *= -1;
+	}
+
+	cursx = src.getX() + x;
+	cursy = src.getY() + y;
+
+	point curs(src.getX(),src.getY());
+	point prev;
+
+	do {
+		prev.setPoint(curs.getX(), curs.getX());
+		curs.setPoint(cursx, cursy);
+		if (curs == dest) {
+			return true;
+		}
+		cursx += x;
+		cursy += y;
+	} while (pmap->isvalid_dest(curs));
+
+	arrow* ar = createArrow(map::itemId, 1);
+	ar->setPt(prev);
+
+	itemList.push_back(ar);
+
+	char buffer[STD_LEN];
+
+	enter_map_op(buffer, STD_LEN, ar);
+
+	unprotectedBroadcast(buffer);
+
+	return false;
+}
+
 int map::getPlayerSize() {
 	int n = lock();
 	if (n != 0) {
@@ -682,6 +738,16 @@ int map::playerRangeMonster(player* p, const char* id, int dmg) {
 	/*
 	 * Validate range around here.
 	 */
+
+	if (!check_range(p->getPt(), m->getPt())) {
+		n = unlock();
+		if (n != 0) {
+			logerr("%s player range monster unlock failure %s\n",
+				mapId->getIdstr(), strerror(n));
+			abort();
+		}
+		return 0;
+	}
 
 	dmg = m->takeDamage(dmg);
 
