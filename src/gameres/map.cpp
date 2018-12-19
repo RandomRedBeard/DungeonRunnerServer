@@ -410,7 +410,10 @@ point map::getClosestPt(point src, point dest) {
 	return pt;
 }
 
-bool map::check_range(point src, point dest) {
+bool map::check_range(player* p, monster* m) {
+	point src(p->getPt().getX(), p->getPt().getY());
+	point dest(m->getPt().getX(), p->getPt().getY());
+
 	point target_vector(dest.getX() - src.getX(),
 		dest.getY() - src.getY());
 
@@ -451,17 +454,6 @@ bool map::check_range(point src, point dest) {
 		cursx += x;
 		cursy += y;
 	} while (pmap->isvalid_dest(curs));
-
-	arrow* ar = createArrow(map::itemId, 1);
-	ar->setPt(prev);
-
-	itemList.push_back(ar);
-
-	char buffer[STD_LEN];
-
-	enter_map_op(buffer, STD_LEN, ar);
-
-	unprotectedBroadcast(buffer);
 
 	return false;
 }
