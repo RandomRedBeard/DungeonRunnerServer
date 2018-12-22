@@ -79,7 +79,7 @@ extern unsigned int STD_LEN;// = 128;
 #define EQUIP_OP "Equip"
 #define UNEQUIP_OP "Unequip"
 #define LEVELUP_OP "LevelUp"
-#define MISS_OP "MISS"
+#define MISS_RANGE_OP "MissRange"
 #define ALLOCATE_ATTR_OP "Allocate"
 
 #define PLAYER_OP "Player"

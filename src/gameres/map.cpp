@@ -727,11 +727,17 @@ int map::playerRangeMonster(player* p, const char* id, int dmg) {
 
 	monster* m = monsterList[i];
 
+	char buffer[STD_LEN];
+
 	/*
 	 * Validate range around here.
+	 * Need range action to occur in this function
 	 */
 
-	if (!check_range(p->getPt(), m->getPt())) {
+	if (!check_range(p, m)) {
+		/*
+		* Get arrow that was shot
+		*/
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player range monster unlock failure %s\n",
@@ -742,8 +748,6 @@ int map::playerRangeMonster(player* p, const char* id, int dmg) {
 	}
 
 	dmg = m->takeDamage(dmg);
-
-	char buffer[STD_LEN];
 
 	range_op(buffer, STD_LEN, p, m, dmg);
 	n = unprotectedBroadcast(buffer);
