@@ -67,7 +67,7 @@ class map {
 	player* findClosestPlayer(point);
 	point getClosestPt(point, point);
 
-	bool check_range(player*, monster*);
+	bool check_range(player*, monster*, point*);
 public:
 	map(objid*, objid*, int);
 	virtual ~map();
@@ -78,7 +78,7 @@ public:
 	int removePlayer(player*);
 	int playerMove(player*, point);
 	int playerMeleeMonster(player*, const char*, int);
-	int playerRangeMonster(player*, const char*, int);
+	int playerRangeMonster(player*, const char*);
 	int playerPickup(player*);
 	int playerDrop(player*, const char*);
 	int playerEquip(player*, const char*, const char*);

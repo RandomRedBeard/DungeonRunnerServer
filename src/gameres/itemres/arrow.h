@@ -22,6 +22,8 @@ public:
 	void setNumberArrows(int);
 
 	int getNumberArrows();
+	int getBaseMax();
+	int getBaseMin();
 	int getMaxDmg();
 	int getMinDmg();
 	int range();

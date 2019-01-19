@@ -399,7 +399,7 @@ int playerRange(player* p, map* m) {
 	}
 
 	if (strcmp(type, MONSTER_OP) == 0) {
-		return m->playerRangeMonster(p, id, p->range());
+		return m->playerRangeMonster(p, id);
 	}
 
 	return -1;

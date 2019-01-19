@@ -320,6 +320,14 @@ int player::unequip(const char* part) {
 	return 0;
 }
 
+arrow* player::getFirstArrow() {
+	if (quiver.empty()) {
+		return (arrow*)nullptr;
+	}
+
+	return quiver.front();
+}
+
 int player::melee() {
 	int dmg = 0;
 	if (mainhand) {

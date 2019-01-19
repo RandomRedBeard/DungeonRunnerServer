@@ -27,6 +27,14 @@ int arrow::getNumberArrows() {
 	return numberOfArrows;
 }
 
+int arrow::getBaseMax() {
+	return baseMax;
+}
+
+int arrow::getBaseMin() {
+	return baseMin;
+}
+
 int arrow::getMaxDmg() {
 	return maxdmg;
 }
