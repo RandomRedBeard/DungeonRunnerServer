@@ -160,6 +160,18 @@ int range_op(char* buffer, int len, player* p, monster* m, int dmg) {
 			m->getId()->getIdstr(), OP_SEP, dmg, OP_SEP);
 }
 
+int miss_range_op(char* buffer, int len, player* p, arrow* ar) {
+	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c%d%c", 
+		MISS_RANGE_OP, OP_SEP, p->getName(), OP_SEP, 
+		ar->getId()->getIdstr(), OP_SEP, ar->getName(), OP_SEP,
+		ar->getPt().getX(), POINT_SEP, ar->getPt().getY(), OP_SEP,
+		ar->getLvl(), OP_SEP, ar->getMaxDmg(), DAMAGE_SEP, ar->getMinDmg(),
+		OP_SEP, ar->getNumberArrows(), OP_SEP, ar->getAttrs()->getStrength(), ATTR_SEP,
+		ar->getAttrs()->getDexterity(), ATTR_SEP,
+		ar->getAttrs()->getIntelligence(), ATTR_SEP,
+		ar->getAttrs()->getVitality(), OP_SEP);
+}
+
 int killed_op(char* buffer, int len, player* p, monster* m) {
 	return snprintf(buffer, len, "%s%c%s%c%s%c%s%c%s%c%d%c", KILLED_OP, OP_SEP,
 			PLAYER_OP, OP_SEP, p->getName(), OP_SEP, MONSTER_OP, OP_SEP,

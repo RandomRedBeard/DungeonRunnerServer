@@ -19,8 +19,20 @@ void arrow::calculateDamage() {
 	mindmg = baseMin * getLvl();
 }
 
+void arrow::setNumberArrows(int n) {
+	numberOfArrows = n;
+}
+
 int arrow::getNumberArrows() {
 	return numberOfArrows;
+}
+
+int arrow::getBaseMax() {
+	return baseMax;
+}
+
+int arrow::getBaseMin() {
+	return baseMin;
 }
 
 int arrow::getMaxDmg() {

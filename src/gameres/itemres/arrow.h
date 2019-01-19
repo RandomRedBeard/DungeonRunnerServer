@@ -19,7 +19,11 @@ class arrow: public item {
 public:
 	arrow(const char*, objid*, int, int, int, int);
 
+	void setNumberArrows(int);
+
 	int getNumberArrows();
+	int getBaseMax();
+	int getBaseMin();
 	int getMaxDmg();
 	int getMinDmg();
 	int range();

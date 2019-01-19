@@ -32,35 +32,35 @@ void physmap::sprintRoom(room* r, char* buffer) {
 
 	for (unsigned int i = 0; i < width; i++) {
 		p.setPoint(r->gettl().getX(), r->gettl().getY() + i);
-		buffer[p.index(HEIGHT, WIDTH)] = '-';
+		buffer[p.index(HEIGHT, WIDTH)] = HORZ_WALL;
 		p.setPoint(r->getbr().getX(), r->gettl().getY() + i);
-		buffer[p.index(HEIGHT, WIDTH)] = '-';
+		buffer[p.index(HEIGHT, WIDTH)] = HORZ_WALL;
 	}
 	for (int i = 1; i < height; i++) {
 		p.setPoint(r->gettl().getX() + i, r->gettl().getY());
-		buffer[p.index(HEIGHT, WIDTH)] = '|';
+		buffer[p.index(HEIGHT, WIDTH)] = VERT_WALL;
 		p.setPoint(r->gettl().getX() + i, r->getbr().getY());
-		buffer[p.index(HEIGHT, WIDTH)] = '|';
+		buffer[p.index(HEIGHT, WIDTH)] = VERT_WALL;
 	}
 
 	for (int i = 1; i < width - 1; i++) {
 		for (int j = 1; j < height; j++) {
 			p.setPoint(r->gettl().getX() + j, r->gettl().getY() + i);
-			buffer[p.index(HEIGHT, WIDTH)] = '.';
+			buffer[p.index(HEIGHT, WIDTH)] = FLOOR;
 		}
 	}
 
 	if (r->geteast().getX() != -1) {
-		buffer[r->geteast().index(HEIGHT, WIDTH)] = '+';
+		buffer[r->geteast().index(HEIGHT, WIDTH)] = HALLWAY_ENTRANCE;
 	}
 	if (r->getsouth().getX() != -1) {
-		buffer[r->getsouth().index(HEIGHT, WIDTH)] = '+';
+		buffer[r->getsouth().index(HEIGHT, WIDTH)] = HALLWAY_ENTRANCE;
 	}
 	if (r->getwest().getX() != -1) {
-		buffer[r->getwest().index(HEIGHT, WIDTH)] = '+';
+		buffer[r->getwest().index(HEIGHT, WIDTH)] = HALLWAY_ENTRANCE;
 	}
 	if (r->getnorth().getX() != -1) {
-		buffer[r->getnorth().index(HEIGHT, WIDTH)] = '+';
+		buffer[r->getnorth().index(HEIGHT, WIDTH)] = HALLWAY_ENTRANCE;
 	}
 }
 
@@ -231,7 +231,7 @@ void physmap::hallway(point p1, point p2) {
 	point index = p1;
 
 	while (index != p2) {
-		sbuffer[index.index(HEIGHT, WIDTH)] = '#';
+		sbuffer[index.index(HEIGHT, WIDTH)] = HALLWAY_FLOOR;
 		if (xleft > rand() % (yleft + 1)) {
 			index.setX(index.getX() + xdir);
 			xleft--;
@@ -240,7 +240,7 @@ void physmap::hallway(point p1, point p2) {
 			yleft--;
 		}
 	}
-	sbuffer[p2.index(HEIGHT, WIDTH)] = '#';
+	sbuffer[p2.index(HEIGHT, WIDTH)] = HALLWAY_FLOOR;
 }
 
 bool physmap::isvalid_dest(point p) {
@@ -251,8 +251,8 @@ bool physmap::isvalid_dest(point p) {
 
 	int index = p.index(HEIGHT, WIDTH);
 
-	if (sbuffer[index] == '.' || sbuffer[index] == '+'
-			|| sbuffer[index] == '#') {
+	if (sbuffer[index] == FLOOR || sbuffer[index] == HALLWAY_ENTRANCE
+			|| sbuffer[index] == HALLWAY_FLOOR) {
 		return true;
 	}
 

@@ -43,6 +43,8 @@ int melee_op(char*, int, monster*, player*, int);
 
 int range_op(char*, int, player*, monster*, int);
 
+int miss_range_op(char*, int, player*, arrow*);
+
 int killed_op(char*, int, player*, monster*);
 int killed_op(char*, int, monster*, player*);
 

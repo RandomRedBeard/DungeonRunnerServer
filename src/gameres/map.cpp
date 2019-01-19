@@ -410,6 +410,56 @@ point map::getClosestPt(point src, point dest) {
 	return pt;
 }
 
+bool map::check_range(player* p, monster* m, point* prev_ret) {
+	point src(p->getPt().getX(), p->getPt().getY());
+	point dest(m->getPt().getX(), p->getPt().getY());
+
+	point target_vector(dest.getX() - src.getX(),
+		dest.getY() - src.getY());
+
+	double angle = atan((double)target_vector.getX() / (double)target_vector.getY());
+
+	double x, y;
+	double cursx, cursy;
+
+	y = cos(angle);
+	x = sin(angle);
+
+	if (target_vector.getX() < 0 && x > 0) {
+		x *= -1;
+	}
+	else if (target_vector.getX() > 0 && x < 0) {
+		x *= -1;
+	}
+
+	if (target_vector.getY() < 0 && y > 0) {
+		y *= -1;
+	}
+	else if (target_vector.getY() > 0 && y < 0) {
+		y *= -1;
+	}
+
+	cursx = src.getX() + x;
+	cursy = src.getY() + y;
+
+	point curs(src.getX(),src.getY());
+	point prev;
+
+	do {
+		prev.setPoint(curs.getX(), curs.getX());
+		curs.setPoint(cursx, cursy);
+		if (curs == dest) {
+			return true;
+		}
+		cursx += x;
+		cursy += y;
+	} while (pmap->isvalid_dest(curs));
+
+	prev_ret->setPoint(prev.getX(), prev.getY());
+
+	return false;
+}
+
 int map::getPlayerSize() {
 	int n = lock();
 	if (n != 0) {
@@ -654,17 +704,18 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 	return 0;
 }
 
-int map::playerRangeMonster(player* p, const char* id, int dmg) {
-	if (dmg < 0) {
-		return -1;
-	}
-
+int map::playerRangeMonster(player* p, const char* id) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player range monster lock failure %s\n", mapId->getIdstr(),
 				strerror(n));
 		abort();
 	}
+
+	/*
+	* Define miss behavior for no id monster
+	* Optional
+	*/
 
 	int i = findMonster(id);
 	if (i < 0) {
@@ -679,13 +730,66 @@ int map::playerRangeMonster(player* p, const char* id, int dmg) {
 
 	monster* m = monsterList[i];
 
+	char buffer[STD_LEN];
 	/*
-	 * Validate range around here.
-	 */
+	* Get arrow to be fired
+	*/
+
+	arrow* to_fire = p->getFirstArrow();
+
+	//No Arrow to fire
+	//Harsh kick protocol
+	if (!to_fire) {
+		n = unlock();
+		if (n != 0) {
+			logerr("%s player range monster unlock failure %s\n",
+				mapId->getIdstr(), strerror(n));
+			abort();
+		}
+		return -1;
+	}
+
+	/*
+	* Validate range with miss protocl
+	*/
+
+	point arrow_land;
+
+	if (!check_range(p, m, &arrow_land)) {
+		/*
+		* Get arrow that was shot
+		* Arrow needs to be copied with new item_id
+		*/
+		arrow* to_fire_cp = new arrow(to_fire->getName(), itemId->childId(), to_fire->getLvl(),
+			1, to_fire->getBaseMax(), to_fire->getBaseMin());
+
+		to_fire_cp->setAttrs(to_fire->getAttrs());
+
+		/*
+		* to_fire_cp needs location
+		*/
+		to_fire_cp->setPt(arrow_land);
+
+		//Add new arrow to item vec
+		itemList.push_back(to_fire_cp);
+
+		miss_range_op(buffer, STD_LEN, p, to_fire_cp);
+		unprotectedBroadcast(buffer);
+		loginfo("Miss: %s\n", buffer);
+
+		n = unlock();
+		if (n != 0) {
+			logerr("%s player range monster unlock failure %s\n",
+				mapId->getIdstr(), strerror(n));
+			abort();
+		}
+		return 0;
+	}
+
+	// Dmg should be > 0 as quiver empty has already been checked
+	int dmg = p->range();
 
 	dmg = m->takeDamage(dmg);
-
-	char buffer[STD_LEN];
 
 	range_op(buffer, STD_LEN, p, m, dmg);
 	n = unprotectedBroadcast(buffer);

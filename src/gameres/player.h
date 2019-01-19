@@ -89,6 +89,8 @@ public:
 	int equip(const char*, const char*);
 	int unequip(const char*);
 
+	arrow* getFirstArrow();
+
 	int melee();
 	int range();
 	int takeDamage(int);

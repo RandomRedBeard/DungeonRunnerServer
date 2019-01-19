@@ -1,3 +1,4 @@
+CC = cl
 TARGET = drserver
 CFLAG = /EHsc /c
 OBJS = 
