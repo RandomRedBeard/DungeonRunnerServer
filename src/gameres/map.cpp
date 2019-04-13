@@ -757,6 +757,11 @@ int map::playerRangeMonster(player* p, const char* id) {
 
 	if (!check_range(p, m, &arrow_land)) {
 		/*
+		* p->range for quiver count
+		*/
+		p->range();
+
+		/*
 		* Get arrow that was shot
 		* Arrow needs to be copied with new item_id
 		*/
