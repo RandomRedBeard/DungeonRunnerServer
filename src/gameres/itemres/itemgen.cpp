@@ -8,7 +8,7 @@
 #include "itemgen.h"
 
 item* createItem(objid* id, int lvl) {
-	switch (rand() % NUMBER_OF_ITEMS) {
+	switch (2 + rand() % (NUMBER_OF_ITEMS - 2)) {
 	case 0:
 		return createWeapon(id, lvl);
 	case 1:

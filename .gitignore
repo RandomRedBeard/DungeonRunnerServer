@@ -1,5 +1,13 @@
 *.o
 *.txt
+*.obj
+*.exe
+*.tlog
+*.ilk
+*.pdb
+*.sln
+*.vcxproj*
+*.log
+.vs
 
 Debug/drserver
-Debug/drserver.exe
