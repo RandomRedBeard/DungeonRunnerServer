@@ -8,7 +8,7 @@
 #include "map.h"
 
 map::map(objid* m_id, objid* i_id, int l) :
-		mapId(m_id), itemId(i_id), lvl(l) {
+	mapId(m_id), itemId(i_id), lvl(l) {
 	pmap = new physmap();
 
 	do {
@@ -148,7 +148,7 @@ point map::placePlayer() {
 				pt.setX(i + playerSpawn.getX());
 				pt.setY(j + playerSpawn.getY());
 				if (findPlayer(pt) < 0 && findMonster(pt) < 0
-						&& isValidPoint(pt)) {
+					&& isValidPoint(pt)) {
 					return pt;
 				}
 			}
@@ -233,7 +233,7 @@ int map::distributeXp(player* p, monster* m) {
 
 			if (n < 0) {
 				logerr("%s distribute xp broadcast failure\n",
-						mapId->getIdstr());
+					mapId->getIdstr());
 			}
 		}
 	}
@@ -244,7 +244,7 @@ int map::distributeXp(player* p, monster* m) {
 void map::monsterThread(monster* m) {
 	using namespace std::literals::chrono_literals;
 	char buffer[STD_LEN];
-	int rval=0;
+	int rval = 0;
 	std::mutex* mlock = m->getLock();
 	std::condition_variable* cond = m->getCond();
 	while (1) {
@@ -255,7 +255,7 @@ void map::monsterThread(monster* m) {
 				ul.unlock();
 				return;
 			}
-			
+
 			std::cv_status cv = cond->wait_for(ul, 1000ms);
 
 			if (cv == std::cv_status::timeout) {
@@ -266,14 +266,14 @@ void map::monsterThread(monster* m) {
 		ul.unlock();
 		if (rval != 0) {
 			logerr("%s monster thread monster lock failure %s\n", m->getName(),
-					strerror(rval));
+				strerror(rval));
 			return;
 		}
 
 		rval = lock();
 		if (rval != 0) {
 			logerr("%s monster thread lock failure %s\n", mapId->getIdstr(),
-					strerror(rval));
+				strerror(rval));
 			abort();
 		}
 
@@ -282,7 +282,7 @@ void map::monsterThread(monster* m) {
 			rval = unlock();
 			if (rval != 0) {
 				logerr("%s monster thread unlock failure %s\n",
-						mapId->getIdstr(), strerror(rval));
+					mapId->getIdstr(), strerror(rval));
 				abort();
 			}
 			continue;
@@ -294,7 +294,7 @@ void map::monsterThread(monster* m) {
 			rval = unlock();
 			if (rval != 0) {
 				logerr("%s monster thread unlock failure %s\n",
-						mapId->getIdstr(), strerror(rval));
+					mapId->getIdstr(), strerror(rval));
 				abort();
 			}
 			continue;
@@ -310,7 +310,7 @@ void map::monsterThread(monster* m) {
 				rval = unlock();
 				if (rval != 0) {
 					logerr("%s monster thread unlock failure %s\n",
-							mapId->getIdstr(), strerror(rval));
+						mapId->getIdstr(), strerror(rval));
 					abort();
 				}
 				continue;
@@ -323,7 +323,7 @@ void map::monsterThread(monster* m) {
 
 			if (rval < 0) {
 				logerr("%s monster thread broadcast failure\n",
-						mapId->getIdstr());
+					mapId->getIdstr());
 			}
 
 			rval = p->getCurHp();
@@ -338,7 +338,7 @@ void map::monsterThread(monster* m) {
 			rval = unlock();
 			if (rval != 0) {
 				logerr("%s monster thread unlock failure %s\n",
-						mapId->getIdstr(), strerror(rval));
+					mapId->getIdstr(), strerror(rval));
 				abort();
 			}
 			continue;
@@ -356,7 +356,7 @@ void map::monsterThread(monster* m) {
 		rval = unlock();
 		if (rval != 0) {
 			logerr("%s monster thread unlock failure %s\n", mapId->getIdstr(),
-					strerror(rval));
+				strerror(rval));
 			abort();
 		}
 	}
@@ -389,13 +389,15 @@ point map::getClosestPt(point src, point dest) {
 
 	if (src.getX() < dest.getX()) {
 		xdir = 1;
-	} else if (src.getX() > dest.getX()) {
+	}
+	else if (src.getX() > dest.getX()) {
 		xdir = -1;
 	}
 
 	if (src.getY() < dest.getY()) {
 		ydir = 1;
-	} else if (src.getY() > dest.getY()) {
+	}
+	else if (src.getY() > dest.getY()) {
 		ydir = -1;
 	}
 
@@ -403,7 +405,8 @@ point map::getClosestPt(point src, point dest) {
 
 	if (xleft > rand() % (yleft + 1)) {
 		pt.setX(pt.getX() + xdir);
-	} else {
+	}
+	else {
 		pt.setY(pt.getY() + ydir);
 	}
 
@@ -411,6 +414,7 @@ point map::getClosestPt(point src, point dest) {
 }
 
 bool map::check_range(player* p, monster* m, point* prev_ret) {
+	return true;
 	point src(p->getPt().getX(), p->getPt().getY());
 	point dest(m->getPt().getX(), p->getPt().getY());
 
@@ -425,6 +429,10 @@ bool map::check_range(player* p, monster* m, point* prev_ret) {
 	y = cos(angle);
 	x = sin(angle);
 
+	printf("%d\n", target_vector.getY());
+
+	printf("%0.2f-%0.2f\n", y, x);
+
 	if (target_vector.getX() < 0 && x > 0) {
 		x *= -1;
 	}
@@ -438,16 +446,33 @@ bool map::check_range(player* p, monster* m, point* prev_ret) {
 	else if (target_vector.getY() > 0 && y < 0) {
 		y *= -1;
 	}
+	
+	if (target_vector.getY() == 0) {
+		y = 0;
+		x = target_vector.getX() > 0 ? 1 : -1;
+	}
 
 	cursx = src.getX() + x;
 	cursy = src.getY() + y;
 
-	point curs(src.getX(),src.getY());
+	point curs(src.getX(), src.getY());
 	point prev;
+
+	printf("%0.2f-%0.2f\n", y, x);
+	printf("%0.2f-%0.2f\n", cursx, cursy);
 
 	do {
 		prev.setPoint(curs.getX(), curs.getX());
 		curs.setPoint(cursx, cursy);
+		arrow* a = new arrow("Arrow", itemId->childId(), p->getLvl(),
+			1, 2, 1);
+		a->setPt(prev);
+
+		char buffer[STD_LEN + 1];
+		enter_map_op(buffer, STD_LEN, a);
+		unprotectedBroadcast(buffer);
+		itemList.push_back(a);
+
 		if (curs == dest) {
 			return true;
 		}
@@ -464,7 +489,7 @@ int map::getPlayerSize() {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s get player size lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -473,7 +498,7 @@ int map::getPlayerSize() {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s get player size unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -488,7 +513,7 @@ int map::broadcast(const char* buffer) {
 	int rval = lock();
 	if (rval != 0) {
 		logerr("%s broadcast lock failure %s\n", mapId->getIdstr(),
-				strerror(rval));
+			strerror(rval));
 		abort();
 	}
 
@@ -497,7 +522,7 @@ int map::broadcast(const char* buffer) {
 	rval = unlock();
 	if (rval != 0) {
 		logerr("%s broadcast unlock failure %s\n", mapId->getIdstr(),
-				strerror(rval));
+			strerror(rval));
 		abort();
 	}
 
@@ -508,13 +533,13 @@ int map::addPlayer(player* p) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s add player lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
 	p->setPt(placePlayer());
 
-	int len = accept_travel_op(NULL, 0, p) + physmap_op( NULL, 0, pmap) + 1;
+	int len = accept_travel_op(NULL, 0, p) + physmap_op(NULL, 0, pmap) + 1;
 
 	char* buffer = (char*)malloc(len);
 	accept_travel_op(buffer, len, p);
@@ -551,7 +576,7 @@ int map::addPlayer(player* p) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s add player unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -562,7 +587,7 @@ int map::removePlayer(player* p) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s remove player lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -572,7 +597,7 @@ int map::removePlayer(player* p) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s remove player unlock failure %s\n", mapId->getIdstr(),
-					strerror(n));
+				strerror(n));
 			abort();
 		}
 		return -1;
@@ -592,7 +617,7 @@ int map::removePlayer(player* p) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s remove player unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -606,12 +631,12 @@ int map::playerMove(player* p, point pt) {
 
 	if (pt.l1dist(p->getPt()) != 1) {
 		return false;
-	 }
+	}
 
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player move lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -619,7 +644,7 @@ int map::playerMove(player* p, point pt) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player move unlock failure %s\n", mapId->getIdstr(),
-					strerror(n));
+				strerror(n));
 			abort();
 		}
 		return false;
@@ -639,7 +664,7 @@ int map::playerMove(player* p, point pt) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player move unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -650,7 +675,7 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player melee monster lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -660,8 +685,8 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player melee monster unlock failure %s\n",
-					mapId->getIdstr(),
-					strerror(n));
+				mapId->getIdstr(),
+				strerror(n));
 			abort();
 		}
 		return 0;
@@ -673,7 +698,7 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player melee monster unlock failure %s\n",
-					mapId->getIdstr(), strerror(n));
+				mapId->getIdstr(), strerror(n));
 			abort();
 		}
 		return 0;
@@ -697,7 +722,7 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player melee monster unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -705,10 +730,11 @@ int map::playerMeleeMonster(player* p, const char* id, int dmg) {
 }
 
 int map::playerRangeMonster(player* p, const char* id) {
+	printf("Arrow\n");
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player range monster lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -722,7 +748,7 @@ int map::playerRangeMonster(player* p, const char* id) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player range monster unlock failure %s\n",
-					mapId->getIdstr(), strerror(n));
+				mapId->getIdstr(), strerror(n));
 			abort();
 		}
 		return -1;
@@ -756,6 +782,11 @@ int map::playerRangeMonster(player* p, const char* id) {
 	point arrow_land;
 
 	if (!check_range(p, m, &arrow_land)) {
+		/*
+		* p->range for quiver count
+		*/
+		p->range();
+
 		/*
 		* Get arrow that was shot
 		* Arrow needs to be copied with new item_id
@@ -796,7 +827,7 @@ int map::playerRangeMonster(player* p, const char* id) {
 
 	if (n < 0) {
 		logerr("%s player range broadcast failure\n", mapId->getIdstr());
-	 }
+	}
 
 	if (m->getCurHp() <= 0) {
 		monsterKilled(p, m);
@@ -805,7 +836,7 @@ int map::playerRangeMonster(player* p, const char* id) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player range monster unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -816,7 +847,7 @@ int map::playerPickup(player* p) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player pickup lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -826,7 +857,7 @@ int map::playerPickup(player* p) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player pickup unlock failure %s\n", mapId->getIdstr(),
-					strerror(n));
+				strerror(n));
 		}
 		return false;
 	}
@@ -848,7 +879,7 @@ int map::playerPickup(player* p) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player pickup unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -859,7 +890,7 @@ int map::playerDrop(player* p, const char* id) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player drop lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -869,7 +900,7 @@ int map::playerDrop(player* p, const char* id) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player drop unlock failure %s\n", mapId->getIdstr(),
-					strerror(n));
+				strerror(n));
 			abort();
 		}
 		return -1;
@@ -892,7 +923,7 @@ int map::playerDrop(player* p, const char* id) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player drop unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -903,7 +934,7 @@ int map::playerEquip(player* p, const char* id, const char* eq_part) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player equip lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -912,7 +943,7 @@ int map::playerEquip(player* p, const char* id, const char* eq_part) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player equip unlock failure %s\n", mapId->getIdstr(),
-					strerror(n));
+				strerror(n));
 			abort();
 		}
 		return -1;
@@ -930,7 +961,7 @@ int map::playerEquip(player* p, const char* id, const char* eq_part) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player equip unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -941,7 +972,7 @@ int map::playerUnequip(player* p, const char* eq_part) {
 	int n = lock();
 	if (n != 0) {
 		logerr("%s player unequip lock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
@@ -950,7 +981,7 @@ int map::playerUnequip(player* p, const char* eq_part) {
 		n = unlock();
 		if (n != 0) {
 			logerr("%s player unequip unlock failure %s\n", mapId->getIdstr(),
-					strerror(n));
+				strerror(n));
 			abort();
 		}
 		return -1;
@@ -968,7 +999,7 @@ int map::playerUnequip(player* p, const char* eq_part) {
 	n = unlock();
 	if (n != 0) {
 		logerr("%s player unequip unlock failure %s\n", mapId->getIdstr(),
-				strerror(n));
+			strerror(n));
 		abort();
 	}
 
