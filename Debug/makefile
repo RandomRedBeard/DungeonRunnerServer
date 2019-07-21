@@ -1,13 +1,13 @@
 CC = gcc
 CFLAG = -Wall -c
-LFLAG = -std=c++17 -lstdc++ -lpthread -lm
+LFLAG = -std=c++17 -lstdc++ -lpthread -lm -L../socketlib -lsocket
+INCLUDES = -I ../socketlib
 
 OBJS = 
 
 TARGET = drserver
 
 include src/subdir.mk
-include src/iores/subdir.mk
 include src/topt/subdir.mk
 include src/gameres/subdir.mk
 include src/gameres/itemres/subdir.mk
