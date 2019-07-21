@@ -3,7 +3,10 @@
 
 #include <stdlib.h>
 
+#include <mutex>
+
 class attr {
+	std::mutex l;
 	int strength, intelligence, dexterity, vitality;
 public:
 	attr();
@@ -16,6 +19,9 @@ public:
 	int getDexterity();
 	void setVitality(int);
 	int getVitality();
+
+	int lock();
+	int unlock();
 
 	void rand_stats(int, int);
 

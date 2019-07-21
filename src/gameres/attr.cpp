@@ -40,6 +40,16 @@ int attr::getVitality() {
 	return i;
 }
 
+int attr::lock() {
+	l.lock();
+	return 0;
+}
+
+int attr::unlock() {
+	l.unlock();
+	return 0;
+}
+
 void attr::rand_stats(int lvl, int n) {
 	int** buffer = (int**)malloc(sizeof(int*) * 4);
 	*(buffer) = &strength;

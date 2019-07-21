@@ -18,19 +18,47 @@
 
 #include "io.h"
 
-class Socket {
+#ifdef _WIN32
+  #ifdef BUILDING_DLL
+      #define DLL_PUBLIC __declspec(dllexport)
+  #else
+      #define DLL_PUBLIC __declspec(dllimport)
+  #endif
+#else
+  #define DLL_PUBLIC
+#endif
+
+class DLL_PUBLIC Socket {
 	int fd;
 	struct sockaddr_in serv;
 	unsigned int serv_len;
+	int poll_wait;
+	char op_sep;
 public:
 	Socket(int);
 	Socket();
 	Socket(std::string, int);
 	~Socket();
+
+	void setPollWait(int);
+	void setOpSep(char);
+
 	int read(char*, int);
 	int write(const char*, int);
 	int closeSocket();
 	int shutdownSocket();
+};
+
+class DLL_PUBLIC ServerSocket {
+	int sock;
+	struct sockaddr_in serv;
+	unsigned int serv_len;
+public:
+	ServerSocket( int );
+	virtual ~ServerSocket();
+	int bindSocket();
+	int listenSocket( int );
+	Socket* acceptSocket();
 };
 
 #endif /* SOCKET_H_ */

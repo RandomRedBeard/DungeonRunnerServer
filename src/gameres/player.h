@@ -18,7 +18,7 @@
 
 #include "../globals.h"
 #include "../log.h"
-#include "../iores/Socket.h"
+#include <Socket.h>
 #include "objid.h"
 #include "point.h"
 #include "itemres/item.h"
@@ -29,7 +29,9 @@
 
 #include "attr.h"
 
-class player {
+#include "generics.h"
+
+class player :public Movable, public HasHealth, public HasLevel ,public HasAttr {
 	Socket* fd;
 
 	std::thread* ostreamThread;
@@ -70,6 +72,7 @@ public:
 
 	void setName(const char*);
 	const char* getName();
+	const char* getId();
 	void setPt(point);
 	point getPt();
 	void setLvl(int);
@@ -78,6 +81,8 @@ public:
 	int getCurHp();
 	void setMaxHp(int);
 	int getMaxHp();
+
+	const char* getType();
 
 	void setAttrs(attr*);
 	attr* getAttrs();

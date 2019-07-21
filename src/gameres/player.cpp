@@ -156,6 +156,10 @@ const char* player::getName() {
 	return (const char*)name;
 }
 
+const char* player::getId() {
+	return getName();
+}
+
 void player::setPt(point p) {
 	pt = p;
 }
@@ -186,6 +190,10 @@ void player::setMaxHp(int mhp) {
 
 int player::getMaxHp() {
 	return maxhp;
+}
+
+const char* player::getType() {
+	return PLAYER_OP;
 }
 
 void player::setAttrs(attr* a) {

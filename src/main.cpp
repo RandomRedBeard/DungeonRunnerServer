@@ -13,12 +13,12 @@
 
 #include <thread>
 
+#include <Socket.h>
+
 #include "topt/topt.h"
 
 #include "globals.h"
 #include "log.h"
-#include "iores/Socket.h"
-#include "iores/ServerSocket.h"
 #include "gameres/monsterres/monster.h"
 #include "gameres/objid.h"
 #include "gameres/point.h"
@@ -29,6 +29,7 @@
 
 #if defined (_WIN32) || defined (_WIN64)
 #pragma comment(lib,"Ws2_32.lib")
+#pragma comment(lib,"libsocket.lib")
 #endif
 
 game g;
@@ -79,6 +80,8 @@ int playerUnequip(player*, map*);
 int playerAllocateAttr(player*, map*);
 
 int globalMessage(player*);
+
+#include "gameres/protocol_mapper.h"
 
 int main(int argc, char** argv) {
 	int opt, port = 5000;
@@ -141,6 +144,9 @@ int main(int argc, char** argv) {
 			logerr("Failed to accept Socket\n");
 			continue;
 		}
+
+		fd->setOpSep(OP_SEP);
+		fd->setPollWait(POLL_WAIT_TIMEOUT);
 
 		t = std::thread(&readerThread, fd);
 		t.detach();
